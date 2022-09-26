@@ -31,4 +31,8 @@ jobs:
         with:
           workload_identity_provider: 'projects/298487802069/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'github-mythbai@regal-bonito-307806.iam.gserviceaccount.com'
-          token_format: 'access_token'
+          #token_format: 'access_token'
+      
+      # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
