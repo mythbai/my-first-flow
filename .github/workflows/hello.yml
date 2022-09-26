@@ -23,16 +23,22 @@ jobs:
       id-token: write
       
     steps:
-      - uses: 'actions/checkout@v3'
-      
-      - id: 'auth'
-        name: 'Authenticate to Google Gloud'
-        uses: 'google-github-actions/auth@v0'
-        with:
-          workload_identity_provider: 'projects/298487802069/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          service_account: 'github-mythbai@regal-bonito-307806.iam.gserviceaccount.com'
-          #token_format: 'access_token'
-      
-      # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
+    - uses: 'actions/checkout@v3'
+
+    - id: 'auth'
+      name: 'Authenticate to Google Gloud'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        workload_identity_provider: 'projects/298487802069/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+        service_account: 'github-mythbai@regal-bonito-307806.iam.gserviceaccount.com'
+        #token_format: 'access_token'
+
+    # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v0'
+
+    # Now you can run gcloud commands authenticated as the impersonated service account.
+    - id: 'gcloud'
+      name: 'gcloud'
+      run: |-
+        gcloud secrets versions access "latest" --secret "my-secret"
